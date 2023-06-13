@@ -7,19 +7,28 @@
 
 ## Form
 
+<!-- prettier-ignore-start -->
 ```tsx
 <form>
   <div>
     <label htmlFor="title" data-test-id="i18n.form.field.title">
       i18n.form.field.title
     </label>
-    <input id="title" name="title" type="text" aria-describedby="title-error-message" />
+    <input 
+      id="title" 
+      name="title" 
+      aria-describedby="title-helper-message title-error-message" 
+      type="text" 
+    />
   </div>
+  <div id="title-helper-message">title will be put on the top of your post</div>
   <div id="title-error-message">Required</div>
 </form>
 ```
+<!-- prettier-ignore-end -->
 
 - get input by label
+- get helper text by input
 - get error message by input
 
 ```ts
@@ -27,13 +36,20 @@ it('form', () => {
   // get input by label
   cy.get('[data-test-id="i18n.form.field.title"]').then(($label) => {
     const forInput = $label.attr('for');
-    console.log(forInput);
     cy.get(`[name="${forInput}"]`).type('test');
   });
 
-  // get error message by input
+  // get helper text by input
+  // helper text is not visible by default
   cy.get('[name="title"]').then(($input) => {
-    const id = $input.attr('aria-describedby');
+    const id = $input.attr('aria-describedby').split(' ')[0];
+    cy.get(`#${id}`).contains('Title will be put on the top of your post.');
+  });
+
+  // get error message by input
+  // error message is not visible by default
+  cy.get('[name="title"]').then(($input) => {
+    const id = $input.attr('aria-describedby').split(' ')[1];
     cy.get(`#${id}`).contains('Required');
   });
 });

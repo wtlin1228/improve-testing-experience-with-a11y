@@ -5,13 +5,20 @@ describe('react-app', () => {
     // get input by label
     cy.get('[data-test-id="i18n.form.field.title"]').then(($label) => {
       const forInput = $label.attr('for');
-      console.log(forInput);
       cy.get(`[name="${forInput}"]`).type('test');
     });
 
-    // get error message by input
+    // get helper text by input
+    // helper text is not visible by default
     cy.get('[name="title"]').then(($input) => {
-      const id = $input.attr('aria-describedby');
+      const id = $input.attr('aria-describedby').split(' ')[0];
+      cy.get(`#${id}`).contains('Title will be put on the top of your post.');
+    });
+
+    // get error message by input
+    // error message is not visible by default
+    cy.get('[name="title"]').then(($input) => {
+      const id = $input.attr('aria-describedby').split(' ')[1];
       cy.get(`#${id}`).contains('Required');
     });
   });

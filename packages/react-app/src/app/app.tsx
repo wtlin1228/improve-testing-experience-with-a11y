@@ -3,8 +3,9 @@ import styles from './app.module.css';
 
 export function App() {
   return (
-    <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       {/* form */}
+      <h1>Form</h1>
       <form>
         <div>
           <label htmlFor="title" data-test-id="i18n.form.field.title">
@@ -13,14 +14,18 @@ export function App() {
           <input
             id="title"
             name="title"
+            aria-describedby="title-helper-message title-error-message"
             type="text"
-            aria-describedby="title-error-message"
           />
+        </div>
+        <div id="title-helper-message">
+          Title will be put on the top of your post.
         </div>
         <div id="title-error-message">Required</div>
       </form>
 
       {/* graphic element */}
+      <h1>Graphic Element</h1>
       <button
         aria-label="hide"
         onClick={() => {
@@ -31,6 +36,7 @@ export function App() {
       </button>
 
       {/* description list */}
+      <h1>Description List</h1>
       <dl>
         <div>
           <div>
@@ -41,6 +47,7 @@ export function App() {
       </dl>
 
       {/* table */}
+      <h1>Table</h1>
       <table className={styles.table}>
         <caption className={styles.caption} data-test-id="i18n.table.caption">
           i18n.table.caption
